@@ -37,7 +37,7 @@ export class News extends Component {
 
   async updateNews() {
     this.props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=dbe57b028aeb41e285a226a94865f7a7&page=${this.state.page}&pageSize=${this.props.pageSize}`
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=46760a8f7499407ea9be8ebc611939f8&page=${this.state.page}&pageSize=${this.props.pageSize}`
     { this.setState({ loading: true }) }
     let data = await fetch(url);
     this.props.setProgress(30);
@@ -63,7 +63,7 @@ export class News extends Component {
   }
 
   fetchMoreData = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=dbe57b028aeb41e285a226a94865f7a7&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
+    const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=46760a8f7499407ea9be8ebc611939f8&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
     this.setState({page: this.state.page + 1})
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -89,7 +89,7 @@ export class News extends Component {
   render() {
     return (
       <>
-        <h4 className={`mt-5 py-5 text-center text-${this.props.mode == 'dark'?'light':'dark'}`} style={{}}>NewsApp - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h4>
+        <h4 className={`mt-5 py-5 text-center ${this.props.mode == 'dark'?'text-light':''}`} style={{}}>NewsApp - Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h4>
         
         {this.state.loading && <Spinner />}
 
@@ -103,7 +103,7 @@ export class News extends Component {
             <div className='row'>
               {this.state.articles.map((element) => {
                 return <div className='col-md-4 my-2' key={element.url}>
-                  <NewsItem title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
+                  <NewsItem mode = {this.props.mode} title={element.title} description={element.description} imageUrl={element.urlToImage} newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name} />
                 </div>
               })}
             </div>
